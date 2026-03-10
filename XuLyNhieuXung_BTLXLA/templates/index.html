@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Phát hiện và loại bỏ nhiễu xung</title>
+
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Phát hiện và loại bỏ nhiễu xung</h1>
+
+<form method="POST" enctype="multipart/form-data">
+
+<input type="file" name="image" required>
+
+<button type="submit">Upload</button>
+
+</form>
+
+{% if results %}
+
+<div class="images">
+
+<div class="image-box">
+<h3>Ảnh gốc</h3>
+<img src="{{ results.original }}">
+</div>
+
+<div class="image-box">
+<h3>Ảnh nhiễu</h3>
+<img src="{{ url_for('static', filename='noisy.jpg') }}">
+</div>
+
+<div class="image-box">
+<h3>Lọc trung vị</h3>
+<img src="{{ url_for('static', filename='median.jpg') }}">
+</div>
+
+<div class="image-box">
+<h3>Lọc giả trung vị</h3>
+<img src="{{ url_for('static', filename='pseudo.jpg') }}">
+</div>
+
+<div class="image-box">
+<h3>Kết hợp bộ lọc</h3>
+<img src="{{ url_for('static', filename='combined.jpg') }}">
+</div>
+
+</div>
+
+<table>
+
+<tr>
+<th>Phương pháp</th>
+<th>MSE</th>
+<th>PSNR</th>
+</tr>
+
+<tr>
+<td>Median</td>
+<td>{{ results.mse_median }}</td>
+<td>{{ results.psnr_median }}</td>
+</tr>
+
+<tr>
+<td>Pseudo Median</td>
+<td>{{ results.mse_pseudo }}</td>
+<td>{{ results.psnr_pseudo }}</td>
+</tr>
+
+<tr>
+<td>Combined</td>
+<td>{{ results.mse_combined }}</td>
+<td>{{ results.psnr_combined }}</td>
+</tr>
+
+</table>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
